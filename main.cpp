@@ -11,28 +11,22 @@ int main()
 {
     // Step1: generating number serialization
     int n = 60;
-    std::vector<int> numbers;
-    numbers.reserve(n);
+    std::vector<int> numbers(n, 0);
 
-    for (int i = 0; i < n; ++i)
-    {
-        numbers.push_back(i);
-    }
+    for (int i = 0; i < n; ++i) {
+        numbers[i] = i;
 
-    for (int i = 0; i < n/4; ++i)
-    {
-        int j = rand()%n;
-        numbers[j] = rand()%n;
+        if (rand() % 10 <= 2) {  // 造几个野值
+            numbers[i] = rand() % 60;
+        }
     }
 
     // Step2: find all triplets whose element is ascending
     std::vector<int> triplets;  // candidate triplets
 
-    for (int i = 1; i < n-1; ++i)
-    {
+    for (int i = 1; i < n-1; ++i) {
         if (numbers[i] - numbers[i-1] == 1 &&
-            numbers[i+1] - numbers[i] == 1)
-        {
+            numbers[i+1] - numbers[i] == 1) {
             triplets.push_back(i);
         }
     }
@@ -58,16 +52,13 @@ int main()
     int numTrip = triplets.size();
     std::vector<std::pair<int, int>> A;
 
-    for (int i = 0; i < numTrip; ++i)
-    {
+    for (int i = 0; i < numTrip; ++i) {
         int fID = triplets[i];
 
-        for (int j = 0; j < numTrip; ++j)
-        {
+        for (int j = 0; j < numTrip; ++j) {
             int bID = triplets[j];
 
-            if (abs(fID-bID) == 1)
-            {
+            if (abs(fID-bID) == 1) {  // 如果是相邻的3元数组
                 A.push_back(std::pair<int, int>(i, j));
                 A.push_back(std::pair<int, int>(j, i));
             }
@@ -79,10 +70,10 @@ int main()
     for (; iter != A.end(); iter++)
     {
         std::pair<int, int> edge = *iter;
-        int a = graph.findCluID(edge.first);
-        int b = graph.findCluID(edge.second);
+        int a = graph.findCluID(edge.first);  // 寻找a的掌门, 这是查
+        int b = graph.findCluID(edge.second); // 寻找b的掌门
 
-        if (a != b)
+        if (a != b)  // 如果a, b的掌门还不是同一个，那就把b归入a的门下，这是并
         {
             graph.join(a, b);
         }

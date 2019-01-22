@@ -3,4 +3,4 @@ project(numberCluster)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(numberCluster main.cpp cluster.h)
+add_executable(numberCluster main.cpp clusterGraph.h)
