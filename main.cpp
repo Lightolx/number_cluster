@@ -70,8 +70,8 @@ int main()
     for (; iter != A.end(); iter++)
     {
         std::pair<int, int> edge = *iter;
-        int a = graph.findCluID(edge.first);  // 寻找a的掌门, 这是查
-        int b = graph.findCluID(edge.second); // 寻找b的掌门
+        int a = graph.findHeadquarter(edge.first);  // 寻找a的掌门, 这是查
+        int b = graph.findHeadquarter(edge.second); // 寻找b的掌门
 
         if (a != b)  // 如果a, b的掌门还不是同一个，那就把b归入a的门下，这是并
         {
@@ -83,7 +83,7 @@ int main()
 
     for (int i = 0; i < numTrip; ++i)
     {
-        int clusterID = graph.findCluID(i);
+        int clusterID = graph.findHeadquarter(i);
         clusteredNumbers[clusterID].push_back(i);
     }
 
